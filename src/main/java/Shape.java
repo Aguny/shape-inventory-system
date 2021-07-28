@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class Shape {
+public interface Shape extends ShapeObservable {
+
+    public void draw();
+
 }
