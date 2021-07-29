@@ -7,11 +7,22 @@ public class ShapeInventorySimulator {
     }
 
     void simulate(AbstractShapeFactory shapeFactory) {
+
+        System.out.println("WELCOME TO THE AWESOME SHAPE PRODUCTION FACILITY!\n");
+        System.out.println("Days without incidents: 5");
+        System.out.println("Starting up shape production line...\n");
+
+
+        ShapeMonitor monitor = new ShapeMonitor();
+
+        Shape standAloneTriangle = shapeFactory.createTriangle();
+        standAloneTriangle.registerObserver(monitor);
+        simulate(standAloneTriangle);
+
         Shape square = shapeFactory.createSquare();
         Shape rectangle = shapeFactory.createRectangle();
         Shape triangle = shapeFactory.createTriangle();
         Shape circle = new CircleAdapter(new Circle());
-        System.out.println("\nShape inventory simulator");
 
         BoxOfShapes boxOfAllShapes = new BoxOfShapes();
 
@@ -33,14 +44,13 @@ public class ShapeInventorySimulator {
         boxOfSquares.addShapeToBox(square5);
 
         boxOfAllShapes.addShapeToBox(boxOfSquares);
-
-        ShapeMonitor monitor = new ShapeMonitor();
         boxOfAllShapes.registerObserver(monitor);
 
         simulate(boxOfAllShapes);
 
-        System.out.println(ShapeCounter.getShapes() + " shapes have been created in total");
-    } 
+        System.out.println("\nShutting down the production line...");
+        System.out.println("TODAY'S RESULTS: " + ShapeCounter.getShapes() + " non-round shapes have been created today");
+    }
     
     void simulate(Shape shape) {
         shape.draw();
